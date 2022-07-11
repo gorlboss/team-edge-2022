@@ -38,19 +38,15 @@
 # Remember! Functions are meant to be reusable, so write a function that will work when called for each person!
 
 # --------------------------------------------
-
-# def itemsCost():
-#   name = input("What is your name?: ")
-#   drinkCost = input(f"How much is your drink {name}?:$ ")
-#   mealCost = input(f"How much is your meal {name}?:$ ")
-#   return name, round(float(drinkCost),2), round(float(mealCost),2)
-   
-# name1, drink1, food1 = itemsCost()
-# print(" ")
-# name2, drink2, food2 = itemsCost()
-# print(" ")
-# name3, drink3, food3 = itemsCost()
-# print(" ")
+def getItemsForPerson(name):
+  recipt = {}
+  while True:
+    item = input("What do you want to order? (type done if done with order): ")
+    if item == "done":
+      break
+    cost = input(f"How much did your {item} cost?: $")
+    recipt[item] = cost
+  return recipt
 
 # -------------------------------------------- 
 
@@ -66,19 +62,17 @@
 
 # -------------------------------------------- 
 
-# def orderCost(name, drink, food):
-#   tip = input(f"How much would you like to tip {name}:$ ")
-#   total = drink + food
-#   tax = total * float(0.1045)
-#   totalReceipt = total + tax + float(tip)
-#   return round(totalReceipt,2)
-
-# receipt1 = orderCost(name1, drink1, food1)
-# print(" ")
-# receipt2 = orderCost(name2, drink2, food2)
-# print(" ")
-# receipt3 = orderCost(name3, drink3, food3)
-# print(" ")
+def calculateTotal(recipt):
+  total = 0
+  for item, cost in recipt.items():
+    print(f"You ordered {item}. It cost cost: ${cost}")
+    total += float(cost)
+  print(f"Your subtotal is: ${total}")
+  tax = round(total * .0725, 2)
+  print(f"Your sales tax is ${tax}")
+  tip = input("How much would you like to tip?: ")
+  grandTotal = round(total + tax + float(tip), 2)
+  print(f"Your total is: ${grandTotal}")
 
 # -------------------------------------------- 
 
@@ -95,13 +89,6 @@
 
 # -------------------------------------------- 
 
-# def receipt(name, drink, food, receipt):
-#   print(f"{name} you ordered a drink for ${drink}.\n Food for ${food}.\n Your meal total,including tax and tip, is {receipt}!\n")
-
-# total1 = receipt(name1, drink1, food1, receipt1)
-# total2 = receipt(name2, drink2, food2, receipt2)
-# total3 = receipt(name3, drink3, food3, receipt3)
-
 
 
 # -------------------------------------------- 
@@ -116,26 +103,11 @@
 # - Display the tax and tip values
 # - Implement a rewards system (stamp cards, buy one get one, etc)
 # --------------------------------------------
-
-def getItemForPerson(name):
-  item = input(f"What would you like to order {name}?: ")
-  cost = input(f"How much does this {item} cost?: $")
-  return item, float(cost)
-
-def calculateTotal(cost):
-  tip = input("How much would you like to tip?: $")
-  tax = cost * float(0.1025)
-  total = cost + tax + float(tip)
-  return round(total, 2)
-
-def printReceipt(name, item, cost, total):
-  print(f"{name} you ordered {item} for ${cost}. Your total, with tax and tip included, is ${total}")
-  
 def getOrder():
-  name = input("What is your name?: ")
-  item, cost = getItemForPerson(name)
-  total = calculateTotal(cost)
-  printReceipt(name, item, cost, total)
+  runTime = input("How many people are in your group?: ")
+  for i in range(0, int(runTime)):
+    name = input("What is your name?: ")
+    personRecpit = getItemsForPerson(name)
+    calculateTotal(personRecpit)
 
-getOrder()
 getOrder()
