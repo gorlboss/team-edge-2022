@@ -40,7 +40,7 @@ if score2 > highestScore:
   print("Higest score is: ", highestScore)
   if score3 > highestScore:
       highestScore = score3
-    print("Highest score is: ", highestScore)
+      print("Highest score is: ", highestScore)
   
 # -------------------------------------------- 
 
