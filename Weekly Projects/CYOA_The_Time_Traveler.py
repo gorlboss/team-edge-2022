@@ -5,7 +5,7 @@ class Person:
     self.lang = lang
     self.descr = descr
     self.inventory = inventory
-    self.response = ""
+    self.response = ""       
 
 class Room:
   def __init__(self, descr=None, people=[], name=None):
@@ -66,6 +66,8 @@ workshop.people = [blacksmith]
 
   #Make a list of shards in the player's inventory 
   #so I can just add to the list
+
+  #Add a sleep function in between function calls/print statment chunks so that it's less jarring
 ##############################################################################
 
 ###### Functions ######
@@ -99,7 +101,7 @@ def answerQuestions():
 def answerQuestions2():
   # Goal: Print the dialogue. Allow a user to select from a bank for questions.
   questions = ["What are you doing with my glasses?", "Do...do you know a woman who wears a red cloak", "What do the shards do?", "What exactly are shards?", "Why are the glasses the only way to find the shards?", "If the shards hold energy, and time traveling take up a lot of energy, how am I able to travel around so easily?", "Did you make this place?", "What were you working on earlier?"]
-  answers = ["I'm fixing them. They are broken if you hadn't noticed. They are supposed to help you find the shards but they're all jacked up. If you try following these things now. They'd probably lead you to your death.", "Woman with a red cloak...huh, haven't heard of her in a while. She must be back.", "They are the only thing that can fix the machine, but they are also the keys to the other shards. The glasses interact with them. Everytime the glasses sense a shard nearby it'll tell you and do it's best to get you there.", "They are little crystals that hold energy. There were more but most were destroyed with the original jump. So these are the last few. Without them we'll never get home.", "A long time ago, someone decided to that they liked jumping around through time and space. So they hid the crystals and used the glasses to keep them hidden. Then the idiot went and erased their memory so no one could get the information except for the chosen one.", "That one I don't know. Those glasses were especially made by the person who got us all stuck here. My best guess is that they must have made some seperate energy source for you.", "Yeah I did. I was head engineer of the team that originaly made the machine. I built this place to help the occasional traveler that passes through.", "Oh, that, I was just working on a dagger. This world has magic so I was just infusing it with some magic. It was supposed to be for a client but they bailed. I'm just having fun working on it."]    
+  answers = ["I'm fixing them. They are broken if you hadn't noticed. They are supposed to help you find the shards but they're all jacked up. If you try following these things now. They'd probably lead you to your death.", "Woman with a red cloak? Ravena...huh, haven't heard of her in a while. She must be back.", "They are the only thing that can fix the machine, but they are also the keys to the other shards. The glasses interact with them. Everytime the glasses sense a shard nearby it'll tell you and do it's best to get you there.", "They are little crystals that hold energy. There were more but most were destroyed with the original jump. So these are the last few. Without them we'll never get home.", "A long time ago, someone decided to that they liked jumping around through time and space. So they hid the crystals and used the glasses to keep them hidden. Then the idiot went and erased their memory so no one could get the information except for the chosen one.", "That one I don't know. Those glasses were especially made by the person who got us all stuck here. My best guess is that they must have made some seperate energy source for you.", "Yeah I did. I was head engineer of the team that originaly made the machine. I built this place to help the occasional traveler that passes through.", "Oh, that, I was just working on a dagger. This world has magic so I was just infusing it with some magic. It was supposed to be for a client but they bailed. I'm just having fun working on it."]    
 
   # While there are items in the questions list:
   while len(questions) > 0:
@@ -179,8 +181,8 @@ def challenge():
   useDagger = input("Do you want to use the dagger? (y/n): ")
 
   if useDagger == "y":
-    print("You take the dagger out. It shines faintly with magic. You take a slash at the vines. The kinfe cuts through. You hear a slight sizzling sound but the knife seems to take no damage. You continue cutting through the vines.\n")
-    print("You finish cutting through the vines. A horrible burning smell fills the room making you lightheaded. The knife disentigrates away in your hand. You spot the shard. There is a sign at the base but you don't stop to read it. You grab the shard and the glases activate.")
+    print("You take the dagger out. It shines faintly with magic.\nAnother message appears fomr the glasses: \"Dirhram Dagger: Dirhram is a material that is very stong and sturdy. This dagger has also be infused with other magical properties. The slash strength and durability of this item are far higher than seen before.\" You grins and slash at the vines. The kinfe cuts through. You hear a slight sizzling sound but the knife seems to take no damage. You continue cutting through the vines.\n")
+    print("You finish cutting through the vines. A horrible burning smell fills the room. You quickly cover your nose with your clothes.\nThe knife disentigrates away in your hand. You spot the shard. There is a sign at the base but you don't stop to read it. You grab the shard.")
     player.inventory.remove("Magic Dagger")
   elif useDagger == "n":
     print("You decide to save the dagger incase it can be used for later. But now you need something to cut the vines. You spot a sharp rock on the floor. You look back at the grid. One of those booby traps has to have something sharp you can use.")
@@ -189,7 +191,7 @@ def challenge():
       gameIsOn == False
       print("You pick the rock up off the floor and slash at the rock. Nothing happens. The vines reach out a grab you. Their thorns peirce your skin.\nGAME OVER")
     elif useItem == "trap":
-      print("You step back towards the edge of the grid. You step on a tile then step back quickly. A large axe comes shooting from the wall. You catch it.\nAnother messagefrom the glasses:\n\"This axe seems to have magical properties. It's slash strength and durability are far higher than seen before\" You grin and begin to slash through the vines.\nYou finish slashing through the vines. The axe dissentigrates. There are small burns and cuts on you hands. Up ahead the shard sits on a pedastal. A sign sits a the base:\n\"Well done, you made it through. I'm suprised. Well I won't berate the point, poisonous gas is probably filling the room as you read this. See you around chosen one.\"\nYou frown at the sign, something about that phrase felt weird. You grab the shard")
+      print("You step back towards the edge of the grid. You step on a tile then step back quickly. A large axe comes shooting from the wall. You catch it.\nAnother messagefrom the glasses:\n\"This axe seems to have magical properties. It's slash strength and durability are far higher than seen before\" You grin and begin to slash through the vines.\n\nYou finish slashing through the vines. The axe dissentigrates. There are small burns and cuts on you hands. Up ahead the shard sits on a pedastal. A sign sits a the base:\n\"Well done, you made it through. I'm suprised. Well I won't berate the point, poisonous gas is probably filling the room as you read this. See you around chosen one.\"\nYou frown at the sign, something about that phrase felt weird. You grab the shard")
 
 def enterWorkshop():
     selection = workshop.enter(player)
@@ -256,6 +258,25 @@ def challenge2():
   elif readyUp == "n":
     print("\n\"Well chosen one we are never truly ready... We shall commence\"\n")
     riddles()
+
+    def fightDialogue():
+      print(f"{womanInRed.name} takes her cloak of and drops it on the floor. A sadistic grin pasted on her face. \"This is gonna be soooo much fun.\"")
+      enemyAttacks = []
+      enemyDodges = []
+      playerAttacks = []
+      playerDodges = []
+
+      playerQuestions = []
+      enemyResponsees = []
+
+      for x in range(0, len(playerQuestions)):
+        print(f"{womanInRed.name} {enemyAttacks[random.randint(0, len(enemyAttacks))]}")
+        print(f"You {playerDodges[random.randint(0, len(enemyAttacks))]}")
+        
+
+def attack():
+  pass
+
 def act_1():
   print("You wake up on the hard ground.\nThe cookie monster pajamas you were in just last night are gone.\nSo is your bed. And your room.\nA pair of glasses are lying next to you.\nOver the trees you spot smoke. Maybe it is a village. You decide to investigate.\nYour travels lead you to a small town.\nThe smoke, you discover, came from what seems to be a tavern of sorts...\n")
   select = tavern.enter(player)
@@ -274,6 +295,7 @@ def act_1():
   player.inventory.append("shard")
   print("Suddenly, a flash of light comes from your pocket. You pull the glasses out, they are now glowing.")
   timeTravel()
+
 def act_2():
   global gameIsOn
   print("You step out into a bright bustling city street. No one seems to notice your sudden apearance.\n")
@@ -298,7 +320,17 @@ def act_3():
   print("You walk through the door.\n")
   challenge()
   if gameIsOn != False:
-    print("You go through the door\n")
+    print("You step out from the room\nYou stagger about, feeling lightheaded, the poison must be starting to work. You spot something glowing in the distance and sprint towards it. It's a portal.\n")
+    print("\nYou step through the portal and end up...well somewhere. You look around. You seems to be in the middle of nowhere. Suspended in space by a platform. Strange images flash around. Something about this feels strangly familiar.\n A voice comes from behind you. You turn around, it's the woman from before:\n\"Congratulations! You made it here. I'll be honest I didn't really think you'd make it here. But you followed all the instructions i gave you and now we can fix the machine!. Give me the shards.\"")
+    print("She holds out her hand expectantly. You stare at her. Something doesn't feel right...")
+    gameChanger = input("Do you want to give the shards to the woman?(y/n): ")
+    if gameChanger == "y":
+      print("You hand her the shards. She laughs, \"Wow I didn't think it would be sooooo easy to trick you!\"\nYou stare at her with confusion as she continues to laugh, \"I'm sorry,\" she says finally, \"You did really good work, but, uh, I dont need you now so...BYE")
+      attack()
+    elif gameChanger == "n":
+      print("You shake your head and back away. Something's not right. Your head starts to hurt.\nThe woman's smile dissapears, replaced by a cold hard sneer: \"So you wanna do this the hard way huh? Fine we'll do it the hard way\"")
+      attack()
+
   
 ###### Gameplay Code ######
 gameIsOn = True
