@@ -72,6 +72,7 @@ workshop.people = [blacksmith]
 
 ###### Functions ######
 import random
+from tkinter.messagebox import QUESTION
 def printQuestions(questions):
   for num in range(len(questions)):
     print(f"{num}: {questions[num]}")
@@ -259,23 +260,29 @@ def challenge2():
     print("\n\"Well chosen one we are never truly ready... We shall commence\"\n")
     riddles()
 
-    def fightDialogue():
-      print(f"{womanInRed.name} takes her cloak of and drops it on the floor. A sadistic grin pasted on her face. \"This is gonna be soooo much fun.\"")
-      enemyAttacks = []
-      enemyDodges = []
-      playerAttacks = []
-      playerDodges = []
+def fightDialogue():
+  print(f"{womanInRed.name} takes her cloak of and drops it on the floor. A sadistic grin pasted on her face. \"This is gonna be soooo much fun.\"")
+  enemyAttacks = []
+  enemyDodges = []
+  playerAttacks = []
+  playerDodges = []
 
-      playerQuestions = []
-      enemyResponsees = []
+  playerQuestions = []
+  enemyResponses = []
 
-      for x in range(0, len(playerQuestions)):
-        print(f"{womanInRed.name} {enemyAttacks[random.randint(0, len(enemyAttacks))]}")
-        print(f"You {playerDodges[random.randint(0, len(enemyAttacks))]}")
-        
+  if "Magic Dagger" in player.inventory:
+    playerAttacks.extend([])
 
-def attack():
-  pass
+  question = 0
+  for x in range(0, len(playerQuestions)):
+    print(f"{womanInRed.name} {enemyAttacks[random.randint(0, len(enemyAttacks))]}")
+    print(f"You {playerDodges[random.randint(0, len(enemyAttacks))]}")
+    print(f"{playerQuestions[question]}, you ask as you {playerAttacks[random.randint(0,len(playerQuestions))]}")
+    print(f"{enemyResponses[question]}")
+    question += 1
+    if question > len(playerQuestions):
+      break
+
 
 def act_1():
   print("You wake up on the hard ground.\nThe cookie monster pajamas you were in just last night are gone.\nSo is your bed. And your room.\nA pair of glasses are lying next to you.\nOver the trees you spot smoke. Maybe it is a village. You decide to investigate.\nYour travels lead you to a small town.\nThe smoke, you discover, came from what seems to be a tavern of sorts...\n")
@@ -326,10 +333,20 @@ def act_3():
     gameChanger = input("Do you want to give the shards to the woman?(y/n): ")
     if gameChanger == "y":
       print("You hand her the shards. She laughs, \"Wow I didn't think it would be sooooo easy to trick you!\"\nYou stare at her with confusion as she continues to laugh, \"I'm sorry,\" she says finally, \"You did really good work, but, uh, I dont need you now so...BYE")
-      attack()
+      fightDialogue()
     elif gameChanger == "n":
       print("You shake your head and back away. Something's not right. Your head starts to hurt.\nThe woman's smile dissapears, replaced by a cold hard sneer: \"So you wanna do this the hard way huh? Fine we'll do it the hard way\"")
-      attack()
+      fightDialogue()
+    print(f"{womanInRed.name} sits panting before you. She has been bested and she knows it. She chuckles, \"What are you gonns get rid of me now. I'd deserve it I suppose. I did try to kill you...\"")
+    kill = input(f"Do you want to kill {womanInRed.name}?(y/n): ")
+    if kill == "y":
+      print("Damn man calm down. This is a non-violent game...get help... game over")
+      gameIsOn = False
+    elif kill == "n":
+      print("You look into her eyes. She has done horrible things but, it's your fault she's here. HSe doesn't deserve this. You shake your head and turn away from her facing the machine.")
+
+    if gameIsOn != False:
+      print()
 
   
 ###### Gameplay Code ######
@@ -342,5 +359,6 @@ while gameIsOn:
   if gameIsOn == False:
     break
   act_3()
+
   #Act_3 Runs
 
