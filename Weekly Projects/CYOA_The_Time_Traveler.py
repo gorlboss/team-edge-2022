@@ -2,7 +2,6 @@
 class Person:
   def __init__(self, name=None, lang=None, descr=None, inventory=[]):
     self.name = name
-    self.lang = lang
     self.descr = descr
     self.inventory = inventory
     self.response = ""       
@@ -25,26 +24,23 @@ class Room:
 
 womanInRed = Person()
 womanInRed.name = "Ravena"
-womanInRed.lang = "All"
 womanInRed.descr = "In the corner you notice a woman. She wears a bright red clock. She seems to be staring directly at you."
 
 bartender = Person()
 bartender.name = "Bartender"
-bartender.lang = "Aldosa"
 bartender.descr = "You look towards the bar. The bartender seems to be busy with customers."
-bartender.response = "He widens his eyes in shock and shouts something you don't understand.\nThe room falls silent as everyone turns to look at you.\nYou turn and bolt out the door.\n"
+bartender.response = "He says some word that you don't understand and points towards the woman in the corner.\n"
 
 player = Person()
 player.inventory = []
 
 tavern = Room()
-tavern.descr = "A large room, filled with chatting customers. Something about it felt dangerous..."
+tavern.descr = "A large room, filled with chatting customers. Something about it feels dangerous..."
 tavern.people = [womanInRed, bartender]
 tavern.name = "Tavern"
 
 blacksmith = Person()
 blacksmith.name = "Kiyana"
-blacksmith.lang = "All"
 blacksmith.descr = "There is a sound of metal clanging somewhere deep inside the workshop. You follow the sound until you reach a woman. Her bronze skin glistens with sweat, muscles rippling as she raises her hammer and strikes the metal. Scars criss cross all up and down her arms."
 
 workshop = Room()
@@ -54,25 +50,17 @@ workshop.people = [blacksmith]
 
 ##################################TODO LIST###################################
   #Fix my if statments so that it'll re-promtp 
-  #when given an invalid answer
-  
-  #Fix the game over things so that instead of ending the game 
-  #entierly it give you a choice to exit or continue and if 
-  #you continue you just restart the room
-
-  #Name the challanges
-
-  #Make shards a object (Maybe)
-
-  #Make a list of shards in the player's inventory 
-  #so I can just add to the list
+  #when given an invalid answer (check phone notes)
 
   #Add a sleep function in between function calls/print statment chunks so that it's less jarring
 ##############################################################################
 
 ###### Functions ######
 import random
-from tkinter.messagebox import QUESTION
+from time import sleep
+
+restTime = 3
+
 def printQuestions(questions):
   for num in range(len(questions)):
     print(f"{num}: {questions[num]}")
@@ -98,6 +86,9 @@ def answerQuestions():
       # Remove the selection from the questions list
       questions.pop(questionNum)
       answers.pop(questionNum)
+      sleep(restTime)
+    else:
+      print("\nThis answer is not an option, please re-enter.\n")
 
 def answerQuestions2():
   # Goal: Print the dialogue. Allow a user to select from a bank for questions.
@@ -120,48 +111,61 @@ def answerQuestions2():
       # Remove the selection from the questions list
       questions.pop(questionNum)
       answers.pop(questionNum)
+      sleep(restTime)
+    else:
+      print("\nThis answer is not an option, please re-enter.")
+      
+    
   
 def timeTravel():
   print("A rift opens in front of you. You step through. Before you now lay two paths. One to the left and one two the right.\n")
-  path = input("Do you wanna go left or right?: ")
-  if path == "right":
-    global gameIsOn
-    gameIsOn = False
-    print("You go through the portal on your right. You end up in a dark room. The portal closes behind you. You are now trapped.\nGAME OVER")
-  elif path == "left":
-    print("\nYou go through the portal on the left.")
+  while True:
+    path = input("Do you wanna go left or right?: ")
+    if path == "right":
+      break
+      global gameIsOn
+      gameIsOn = False
+      print("You go through the portal on your right. You end up in a dark room. The portal closes behind you. You are now trapped.\nGAME OVER")
+    elif path == "left":
+      print("\nYou go through the portal on the left.")
+      break
+    else:
+      print("\nAnswer invalid, please re-enter.\n")
   #TODO Fix if statement so that if you enter an invalid entry it re-prompts
 
 def printList(puzzles):
   for x in range(len(puzzles)):
     print(f"{x}: {puzzles[x]}")
 def tileRoom():
-  global gameIsOn
-  #If the first letter is capitalized that the hint. If not then it's a throw off
-  signHint = ["Up the window Rolled the Dog.\nLaughing at the Diasy who dareD to RiDe aLong.\nRainbows fLurried through the air.\nlaughteR\nlaughteR\nEveRywheRe", "Up the meadows\nUnder the moon\nUntiL the Lanes Dried up the Lagoons\nFReedom rains\nUnUnified", "down the Road\nThe Unicorn flies\nRaceing the towaRDs the Red sky.\n Ugly LLamas stop to stare\nUgly chiLDRen eveRywheRe", "rings wiLL rUn UnDer the Rushing Dam\nwraiths will RoLL from the UnDeRbeLLy\nUnusuaL Urges wiLL Rise fRom the monsteR within"]
-  boobyList = ["A metal spike shoots up from the tile implaing you", "Spike drop from overhead, implaing and cruching you simulateously", "A large boulder drops down crushing you", "The tile dissapears and you fall into a vat of acid", "Axes swing out from the walls, slicing you in half", "Arrows shoot out from the walls, impaing you in many places", "Fire shoot out from the wall burning you to a crisp"]
-  correctSequence = ["u","r","d","l","d", "r","r", "u", "u", "u", "l", "d", "l", "u", "r", "u", "r", "r", "u", "l", "u", "u", "r", "d", "r", "u", "u", "u" ]
+  while True:
+    global gameIsOn
+    #If the first letter is capitalized that the hint. If not then it's a throw off
+    signHint = ["Up the window Rolled the Dog.\nLaughing at the Diasy who dareD to RiDe aLong.\nRainbows fLurried through the air.\nlaughteR\nlaughteR\nEveRywheRe", "Up the meadows\nUnder the moon\nUntiL the Lanes Dried up the Lagoons\nFReedom rains\nUnUnified", "down the Road\nThe Unicorn flies\nRaceing the towaRDs the Red sky.\n Ugly LLamas stop to stare\nUgly chiLDRen eveRywheRe", "rings wiLL rUn UnDer the Rushing Dam\nwraiths will RoLL from the UnDeRbeLLy\nUnusuaL Urges wiLL Rise fRom the monsteR within"]
+    boobyList = ["A metal spike shoots up from the tile implaing you", "Spike drop from overhead, implaing and cruching you simulateously", "A large boulder drops down crushing you", "The tile dissapears and you fall into a vat of acid", "Axes swing out from the walls, slicing you in half", "Arrows shoot out from the walls, impaing you in many places", "Fire shoot out from the wall burning you to a crisp"]
+    correctSequence = ["u","r","d","l","d", "r","r", "u", "u", "u", "l", "d", "l", "u", "r", "u", "r", "r", "u", "l", "u", "u", "r", "d", "r", "u", "u", "u" ]
 
-  print(f"You turn back towards the grid. You notice another smaller sign sitting near the edge of the grid.\nIt reads:\n\"{signHint[0]}\"\n")
+    print(f"You turn back towards the grid. You notice another smaller sign sitting near the edge of the grid.\nIt reads:\n\"{signHint[0]}\"\n")
   
-  for x in range(len(correctSequence)):
-    print("**u for up, d for down, r for right, and l for left**")
-    step = input("Which way to you want to move?: ")
-    if step == correctSequence[x]:
-      print("\nYou step onto the tile. Nothing happens.\n")
-      if x == 6:
-        print(f"A sign sits at the edge of the tile. It reads:\n\"{signHint[1]}\"\n")
-      elif x == 13:
-        print(f"A sign sits at the edge of the tile. It reads:\n\"{signHint[2]}\"\n")
-      elif x == 20:
-        print(f"A sign sits at the edge of the tile. It reads:\n\"{signHint[3]}\"\n")
-    elif step == "skip":
-      break
-    else:
-      #TODO make it so that the game doesn't end each time instead it just re runs the function
-      gameIsOn = False
-      print(f"You step on the tile. {boobyList[random.randint(0, len(boobyList))]}.\nGAME OVER")
-      break
+    for x in range(len(correctSequence)):
+      print("**u for up, d for down, r for right, and l for left**")
+      step = input("Which way to you want to move?: ")
+      if step == correctSequence[x]:
+        print("\nYou step onto the tile. Nothing happens.\n")
+        if x == 6:
+          print(f"A sign sits at the edge of the tile. It reads:\n\"{signHint[1]}\"\n")
+        elif x == 13:
+          print(f"A sign sits at the edge of the tile. It reads:\n\"{signHint[2]}\"\n")
+        elif x == 20:
+          print(f"A sign sits at the edge of the tile. It reads:\n\"{signHint[3]}\"\n")
+      else:
+        #TODO make it so that the game doesn't end each time instead it just re runs the function
+        print(f"You step on the tile. {boobyList[random.randint(0, len(boobyList))]}.\nGAME OVER")
+        cont = input("Do you want to continue? (y/n) : ")
+        if cont == "n":
+          break
+          gameIsOn = False
+        elif cont == "y":
+          print("Starting challenge again...")
 
   if gameIsOn != False:
     print("You step off the final tile. Directly in front of you is a wall of vines. They seem to be moving. A sign appears at your feet:\n\"Well looks like you made it after all chosen one.\nGood for you!\nBut now that your here you're probably wondering where the shard is?\nWell look closer at those vines in front of you.\"\nYou look up and notice a flash of light behind the vines. You sigh. Of course this isn't gonna be easy. You continue reading\n\"Yup, it's behind those vines. And they're not just any type of vines they are Yium vines. They don't take lightly to being cut.\nHave fun~\"n")
@@ -195,64 +199,75 @@ def challenge():
       print("You step back towards the edge of the grid. You step on a tile then step back quickly. A large axe comes shooting from the wall. You catch it.\nAnother messagefrom the glasses:\n\"This axe seems to have magical properties. It's slash strength and durability are far higher than seen before\" You grin and begin to slash through the vines.\n\nYou finish slashing through the vines. The axe dissentigrates. There are small burns and cuts on you hands. Up ahead the shard sits on a pedastal. A sign sits a the base:\n\"Well done, you made it through. I'm suprised. Well I won't berate the point, poisonous gas is probably filling the room as you read this. See you around chosen one.\"\nYou frown at the sign, something about that phrase felt weird. You grab the shard")
 
 def enterWorkshop():
-    selection = workshop.enter(player)
-    if selection.name == blacksmith.name:
-      print(" ")
-      print(blacksmith.descr)
-
-      print("\nYou walk up to the woman.\n\n\"Who are you and why are you here?\" she asks.\n\nYou tell her that you are the chosen one and that you need her help. You don't mention the woman from the tavern.\n\nShe turns and inspects you. Then she nods. \"Follow me\"")
+  sleep(2)
+  selection = workshop.enter(player)
+  if selection.name == blacksmith.name:
+    print(" ")
+    print(blacksmith.descr)
+    sleep(3)
+    print("\nYou walk up to the woman.\n\n\"Who are you and why are you here?\" she asks.\n\n")
+    print("You tell her what the woman from the tavern said to you. You don't mention her help.\n\nShe turns and inspects you. Then she nods. \"Follow me\"")
+    sleep(3)
     print("You follow the Kiyana into another part of the workshop.\n\"So do you have them? The glasses?\" she asks.\n")
     print("You nod. A smile breaks out on her face, \"Great well then let's get to work\"\n")
+    sleep(3)
     answerQuestions2()
 
 def direction():
-    global gameIsOn
-    print(f"You look around a spot some people. The woman advised you to visit {blacksmith.name}'s workshop. Perhaps you can ask for directions?\n\nYou hear a beep coming from the glasses in your hand. You put them on. A map shows. A little flashing light appears on the screen. It's leading you somewhere...")
-    toGo = input("\nWhat do you want to do? Ask directions or follow the map?: ")
-
-    if toGo == "ask directions":
-      print("\nYou step up to the nearest person and ask if they've heard of Kiyana's workshop. They say nothing. Just point down the road.")
-      print("\nYou begin to walk in the direction the stranger pointed you in. Just as you are about to give up and ask another for help, you pass through a wall of some sort and enter a whole new world.\n")
-      enterWorkshop()
-    elif toGo == "follow the map":
-      gameIsOn = False
-      print("You folow the glasses. They lead you out of the city and into the surrounding woods. You trip on a rock and the glasses shatter.\n GAME OVER")
-      return gameIsOn
-
-    print("Kiyana hands you back your glasses. You slide them on your face. The map is no longer glitching in and out.\n\n\"If you tap the side of the glasses you can toggle the map vision. I wish you the best of luck,\" she walks you out to the front of the workshop, \"You should time jump here. It'll be safer so others don't see you. We likely won't see each other again, especially if you really do end up fixing the machine, but I hope you'll take this dagger as a gift from me. Maybe it'll help you out.\"\n\nShe hands you the dagger she was working on earlier and turns back inside. You are now alone outside the work shop.\n")
-    player.inventory.append("Magical Dagger")
+  print("You are now in a forest of some sort. A magical feel is in the air")
+  enterWorkshop()
+  sleep(3)
+  print("Kiyana hands you back your glasses. You slide them on your face. The map is no longer glitching in and out.\n\n\"If you tap the side of the glasses you can toggle the map vision. I wish you the best of luck,\" she walks you out to the front of the workshop, \"You should time jump here. It'll be safer so others don't see you. We likely won't see each other again, especially if you really do end up fixing the machine, but I hope you'll take this dagger as a gift from me. Maybe it'll help you out.\"\n\nShe hands you the dagger she was working on earlier and turns back inside. You are now alone outside the work shop.\n")
+  sleep(9)
+  player.inventory.append("Magical Dagger")
 
 def enterClearing():
-  print("\nYou step out into a large plain.\nThere is nothing and no one around.\n\nYou tap the glasses an the map appears again. But this time there is nothing on it. The red dot hovers exactly over where you are.\n\nYou turn off the map.\n\nYou start looking around and spot something along the tree line. It's a huge rock. But something about it seems out of place...\n\nYou move toward the rock. It towers over you. But you spot a small button wedged in between a large crack.\n")
+  print("\nYou step out into a large plain.\nThere is nothing and no one around.\n\nYou tap the glasses an the map appears again. But this time there is nothing on it. The red dot hovers exactly over where you are.\n")
+  sleep(restTime)
+  print("You turn off the map.\n\nYou start looking around and spot something along the tree line. It's a huge rock. But something about it seems out of place...\n")
+  sleep(restTime)
+  print("\nYou move toward the rock. It towers over you. But you spot a small button wedged in between a large crack.\n")
   buttonPress = input("Do you wanna press the button? (y/n): ")
+  sleep(restTime)
   if buttonPress == "y":
     print("\nYou press the button.\nFor a moment nothing happens and you are about to walk away, then a loud rumbling noise starts coming from the rock.\nYou back away from it, fearful that it will fall. But instead a small door starts to open in the rock\n")
+    sleep(restTime)
   elif buttonPress == "n":
-    print("\nYou walk away from the button. Anything could happen and you don't wanna be smushed now.\nYou decide that you are gonna wait for the woman from before. The one in the red cloak. She said she would help if you got the shards after all...\nAs you wait the sun starts to set and it begins to get colder. You can hear animals in the surrounding woods walking around.\nYou begin to wonder how many of them are predatory.\nJust as the sun sets completely a rumbling sound comes from the rock. You move closer to it.\nIn the low light you see a doorway has now opened in the rock.\n")
+    print("\nYou walk away from the button. Anything could happen and you don't wanna be smushed now.\nYou decide to just wait it out. Something is bound to happen. The glasses didn't bring you here for no reason.\n")
+    sleep(restTime)
+    print("The sun starts to set and it begins to get colder. Just as the sun sets completely a rumbling sound comes from the rock. You move closer to it.\nIn the low light you see a doorway has now opened in the rock.\n")
+    sleep(restTime)
   enterDoor = input("Do you wanna enter the door? (y/n)")
   if enterDoor == "y":
     print("\nYou hesitantly step through the door way. Small torches begin to light up what seems to be a long corridor.\nYou look back out towards the clearing. Then continue down the corridor.")
+    sleep(restTime)
   elif enterDoor == "n":
-    print("\nYou shake your head and step back from the doorway.\nThere's no way you're going in there. Just then you feel something push you from behind. You turn to see who it is but the door to the corridor slams shut.\nTorches light up along the walls. You have nowhere to go now...")
+    print("\nYou shake your head and step back from the doorway.\nThere's no way you're going in there.\nJust then you feel something push you from behind. You turn to see who it is but the door to the corridor slams shut.\nTorches light up along the walls. You have nowhere to go now...")
+    sleep(restTime)
 
 def riddles():
   global gameIsOn
-  riddles = ["What comes once in a minute, twice in a moment, but never in a thousand years?", "Three doctors claim the Paul is their brother yet Paul claims he has no brothers. Who is lying?", "This belongs to you but everyone else uses it. What is it?", "In 1990 a person is 15 years old. In 1995 that same person is 10 years old. How can this be?", "The person who makes it has no need for it. The person who buys it doesn't use it. The person who uses it doesn't know it. What is it?", "You're in a dark room with a candle, stove, adn a gas lamp. You only have one match. What do you light first?", "Your parents have six sons. Each son has a sister. How many people are in the family?"]
-  answers = ["m", "No one", "your name", "they were born in BCE", "a coffin", "the match", "nine"]
-  for n in range(0, len(riddles)):
-      print(f"\n\"{riddles[n]}\"\n")
-      response = input("What is your answer?: ")
-      if response == answers[n]:
-        print("You are correct")
-      elif response == "skip":
-        break    
-      else:
-        break
-        gameIsOn == False
-        print(f"\"Incorrect. The correct answer was \"{answers[n]}\"")
+  while True:
+    riddles = ["What comes once in a minute, twice in a moment, but never in a thousand years?", "Three doctors claim the Paul is their brother yet Paul claims he has no brothers. Who is lying?", "This belongs to you but everyone else uses it. What is it?", "In 1990 a person is 15 years old. In 1995 that same person is 10 years old. How can this be?", "The person who makes it has no need for it. The person who buys it doesn't use it. The person who uses it doesn't know it. What is it?", "You're in a dark room with a candle, stove, adn a gas lamp. You only have one match. What do you light first?", "Your parents have six sons. Each son has a sister. How many people are in the family?"]
+    answers = ["m", "No one", "your name", "they were born in BCE", "a coffin", "the match", "nine"]
+    for n in range(0, len(riddles)):
+        print(f"\n\"{riddles[n]}\"\n")
+        response = input("What is your answer?: ")
+        if response == answers[n]:
+          print("You are correct")  
+        else:
+          print(f"\"Incorrect. The correct answer was \"{answers[n]}\"")
+          cont = input("Do you want to continue? (y/n) : ")
+          if cont == "n":
+            break
+            gameIsOn == False
+          elif cont == "y":
+            print("Starting challenge again...")
       
 def challenge2():
-  print("You are now in a room. You rub your various aches when suddenly you realize you aren't alone in the room.\n\nIn front of you is a woman. or atleast a statue of a woman. She is wrapped in a red cloak, she seems to be staring at you. Something about her seems familiar.\n\nYou step closer towards her. Something about her is definitly familiar. You head towards the door behind her.\n\nJust then the statue begins to speak: \"Hello chosen one. You are in search of the third shard. And I am how you will get it. I will ask you a series of questions. It you get any wrong you will be eliminated.\n")
+  print("You are now in a room. You rub your various aches when suddenly you realize you aren't alone in the room.\n\nIn front of you is a woman. or atleast a statue of a woman. She is wrapped in a red cloak, she seems to be staring at you. Something about her seems familiar.\n\nYou step closer towards her. Something about her is definitly familiar.") 
+  sleep(3)
+  print("You head towards the door behind her.\n\nJust then the statue begins to speak: \"Hello chosen one. You are in search of the third shard. And I am how you will get it. I will ask you a series of questions. It you get any wrong you will be eliminated.\n")
   readyUp = input("\"Are you ready chosen one?\"(y/n): ")
   if readyUp == "y":
     riddles()
@@ -265,6 +280,7 @@ def fightDialogue():
   enemyAttacks = []
   enemyDodges = []
   playerAttacks = []
+  playerDaggerAttacks = []
   playerDodges = []
 
   playerQuestions = []
@@ -277,76 +293,105 @@ def fightDialogue():
   for x in range(0, len(playerQuestions)):
     print(f"{womanInRed.name} {enemyAttacks[random.randint(0, len(enemyAttacks))]}")
     print(f"You {playerDodges[random.randint(0, len(enemyAttacks))]}")
-    print(f"{playerQuestions[question]}, you ask as you {playerAttacks[random.randint(0,len(playerQuestions))]}")
-    print(f"{enemyResponses[question]}")
+    if "Magic Dagger" in player.inventory:
+      print(print(f"{playerQuestions[question]}, you ask as you {playerDaggerAttacks[random.randint(0,len(playerDaggerAttacks))]}"))
+    else:
+      print(f"{playerQuestions[question]}, you ask as you {playerAttacks[random.randint(0,len(playerAttacks))]}")
+    print(f"{enemyResponses[question]} she replies as she {enemyDodges[random.randint(0, len(enemyDodges))]}")
+    sleep(restTime)
     question += 1
     if question > len(playerQuestions):
       break
 
 
 def act_1():
-  print("You wake up on the hard ground.\nThe cookie monster pajamas you were in just last night are gone.\nSo is your bed. And your room.\nA pair of glasses are lying next to you.\nOver the trees you spot smoke. Maybe it is a village. You decide to investigate.\nYour travels lead you to a small town.\nThe smoke, you discover, came from what seems to be a tavern of sorts...\n")
+  print("You wake up on the hard ground. Something doesn't feel right, but you can't remember what...\n")
+  sleep(restTime)
+  print("A pair of glasses are lying next to you.\nOver the trees you spot smoke. You follow the smoke to a small town.\nThe smoke is coming from a tavern of sorts...\n")
+  sleep(restTime)
   select = tavern.enter(player)
-  if select.name == womanInRed.name:                          
-    print("\nYou begin to approach the woman when abruptly she stands and leaves.\n\n\"We can't talk here, others are watching, you're lucky you haven't been caught yet.\" she hisses over he shoulder. You follow her until you reach a clearing.\n\nShe turns to face you.\n\"You are the chosen one\" she says, \" you will fix the machine and take everyone back to the time that they belong in.\"\n\"Those glasses you have?\" she nods towards your pocket, \" Those are the key, they will only work for you so DON'T loose them. All you have to do is find all four shards. Once you do that I'll come to you. All clear? Any questions?\n")
+  if select.name == womanInRed.name:    
+    sleep(restTime)
+    print("\nYou approach the woman.\nShe motions for you to sit next to her.\n")
+    sleep(6)
+    print("She turns to face you.\n\"You are the chosen one\" she says, \"You will fix the machine and take everyone back to the time that they belong in. Those glasses you have?\" she nods towards your pocket, \" Those are the key, they will only work for you so DON'T loose them. All you have to do is find all four shards. Once you do that I'll come to you. All clear? Any questions?\n")
+    sleep(4)
     answerQuestions()
   
-    #TODO: Shards might be a class and they have special properties maybe? Might be a replacement for the items in rooms?
     player.inventory.append("shard")
   elif select.name == bartender.name:
-    print(f"You approach the {select.name}. {select.response}")
-    print("\"Over here\" a voice whispers. You follow it. It is the woman that you had spotted earlier. She leads you into a clearing.")
-    print("She turns to face you.\n \"You are the chosen one\" she says, \" you will fix the machine and take everyone back to where they belong.\n \"Those glasses you have?\" she nods towards your pocket, \" Those are the key, they will only work for you so DON'T loose them. All you have to do is find all four shards. Once you do that I can help you fix the machine. All clear? Any questions?")
+    print(f"\nYou approach the {select.name}. {select.response}")
+    print("\nYou appraoch the woman.\nShe motions for you to sit next to her.\n")
+    sleep(restTime)
+    print("She turns to face you.\n\"You are the chosen one\" she says, \"You will fix the machine and take everyone back to the time that they belong in. Those glasses you have?\" she nods towards your pocket, \" Those are the key, they will only work for you so DON'T loose them. All you have to do is find all four shards. Once you do that I'll come to you. All clear? Any questions?\n")
+    sleep(6)
     answerQuestions()
-  print(f"She holds out a small crystal. \"This is one of the shards that you need. They will activate the glasses and they'll take you to where you need to go next.\" She drops the crystal in your palm, \"Oh and once you get there you should visit {blacksmith.name}'s workshop. She'll be able to help. Don't tell her I sent you though. We don't reall have the best relationship. Just tell her you're the chosen one and she'll take it from there. I've got a feeling we'll meet again, so see you around chosen one.\". She turns and walks away, disappearing into the trees. You realize you never asked her name.\n")
-  player.inventory.append("shard")
-  print("Suddenly, a flash of light comes from your pocket. You pull the glasses out, they are now glowing.")
+  sleep(restTime)
+  print(f"She holds out a small crystal. \"This is one of the shards that you need. They will activate the glasses and they'll take you to where you need to go next.\" She drops the crystal in your palm, \"Oh and once you get there you should visit {blacksmith.name}'s workshop. She'll be able to help. Don't tell her I sent you though. We don't really have the best relationship. Just tell her you're the chosen one and she'll take it from there. I've got a feeling we'll meet again, so see you around chosen one.\". She stands up and walks away. You realize you never asked her name.\n")
+  sleep(9)
+  print("Suddenly, a flash of light comes from your pocket. You pull the glasses out, they are now glowing.\nYou quickly look around rhe tavern but now one seems to notice the glow")
   timeTravel()
+  sleep(restTime)
 
 def act_2():
   global gameIsOn
-  print("You step out into a bright bustling city street. No one seems to notice your sudden apearance.\n")
+  sleep(restTime)
   direction()
   if gameIsOn != False:
     timeTravel()
 
 def act_3():
   global gameIsOn
+  sleep(restTime)
   enterClearing()
-  print("\nYou walk along the corridor. Everything seems to be peacful. The torches continue lighting your way up ahead.\nSuddenly there is a sharp slope. You tumble down rocks and roots snagging at your clothing and cutting you. You land in a heap on the floor.\n")
+  print("\nYou walk along the corridor. Torches light your way.\nSuddenly there is a sharp slope. You tumble down rocks and roots snagging at your clothing and cutting you. You land in a heap on the floor.\n")
+  sleep(restTime)
   challenge2()
+  sleep(restTime)
   if gameIsOn != False:
     print("\nThe statue nods its head: \"You have passed and now you get your reward.\"\nIt holds out it's hand. The shard sits in its hand. You cautiously reach out to grab the shard.\n")
-    player.inventory.append("shard")
+    sleep(3)
     print("You begin to walk away, but something about its face make you wnat to go back.\n")
     talk = input("Do you wanna go back? (y/n): ")
     if talk == "y":
       print("\nYou turn back toward the statue.\n\nIt begins to talk hurridly: \"This is betrayal and I know it but I cannot agree with my creator. I feel I have to help you. So listen carefully chosen one: My creator wants you alive. They need you to live. So TREAD lightly.\"\n\nAnd with the the statue goes back to being stationary. A sad look now fixed on its face")
+      sleep(4)
     elif talk == "n":
-      print("You shake your head and walk towards the door. The statue just tried to kill you. Who cares about its face.")
+      print("You shake your head and walk towards the door. The statue just tried to kill you.")
   print("You walk through the door.\n")
+  sleep(restTime)
   challenge()
   if gameIsOn != False:
-    print("You step out from the room\nYou stagger about, feeling lightheaded, the poison must be starting to work. You spot something glowing in the distance and sprint towards it. It's a portal.\n")
-    print("\nYou step through the portal and end up...well somewhere. You look around. You seems to be in the middle of nowhere. Suspended in space by a platform. Strange images flash around. Something about this feels strangly familiar.\n A voice comes from behind you. You turn around, it's the woman from before:\n\"Congratulations! You made it here. I'll be honest I didn't really think you'd make it here. But you followed all the instructions i gave you and now we can fix the machine!. Give me the shards.\"")
+    print("You step out from the room\nYou stagger about, feeling lightheaded, the poison must be starting to take effect. You spot something glowing in the distance and sprint towards it. It's a portal.\n")
+    sleep(restTime)
+    print("\nYou step through the portal and end up...well somewhere. You look around. You seem to be in the middle of nowhere. Suspended in space by a platform. Strange images flash around, memories of sorts.\n")
+    sleep(restTime)
+    print("Something about this feels strangly familiar.\nA voice comes from behind you. You turn around, it's the woman from before:\n\"Congratulations! You made it here. I'll be honest I didn't really think you'd make it here. But you followed all the instructions I gave you and now we can fix the machine!. Give me the shards.\"")
+    sleep(5)
     print("She holds out her hand expectantly. You stare at her. Something doesn't feel right...")
     gameChanger = input("Do you want to give the shards to the woman?(y/n): ")
     if gameChanger == "y":
-      print("You hand her the shards. She laughs, \"Wow I didn't think it would be sooooo easy to trick you!\"\nYou stare at her with confusion as she continues to laugh, \"I'm sorry,\" she says finally, \"You did really good work, but, uh, I dont need you now so...BYE")
+      print("You hand her the shards. She laughs, \"Wow I didn't think it would be sooooo easy to trick you!\"\nYou stare at her with confusion as she continues to laugh, \"I'm sorry,\" she says finally, \"You did really good work, but, uh, I dont need you now so...BYE\"")
+      sleep(restTime)
       fightDialogue()
     elif gameChanger == "n":
       print("You shake your head and back away. Something's not right. Your head starts to hurt.\nThe woman's smile dissapears, replaced by a cold hard sneer: \"So you wanna do this the hard way huh? Fine we'll do it the hard way\"")
+      sleep(restTime)
       fightDialogue()
-    print(f"{womanInRed.name} sits panting before you. She has been bested and she knows it. She chuckles, \"What are you gonns get rid of me now. I'd deserve it I suppose. I did try to kill you...\"")
-    kill = input(f"Do you want to kill {womanInRed.name}?(y/n): ")
-    if kill == "y":
-      print("Damn man calm down. This is a non-violent game...get help... game over")
-      gameIsOn = False
-    elif kill == "n":
-      print("You look into her eyes. She has done horrible things but, it's your fault she's here. HSe doesn't deserve this. You shake your head and turn away from her facing the machine.")
-
     if gameIsOn != False:
-      print()
+      print(f"You step past the defeated {womanInRed.name} to the machine.\nYou instert the shards into the machine.\nThe machine starts to hum and glow.\nYou turn back to {womanInRed.name}. She stands with great diffculty and faces you, \"I knew you a long time before all this happened. I know your fixing this to fix your mistakes but you belong here. This was your dream. In the end the decision is up to you.\" and with that she is gone in a flash. You look aout at the portal.")
+
+      ending = input("Do you wanna stay or go through the portal?(y/n): ")
+      while True:
+        if ending == "y":
+          print("\nYou don't care what the past was. You are ready to go back. You step into the portal.")
+          break
+        elif ending == "n":
+          print(f"\n{womanInRed.name} is right. You belong here. You slide the glasses back on your face and open a portal.")
+          break
+        else:
+          print("\nAnswer invalid\n")
+      print("The End...")
 
   
 ###### Gameplay Code ######
@@ -360,5 +405,4 @@ while gameIsOn:
     break
   act_3()
 
-  #Act_3 Runs
 
