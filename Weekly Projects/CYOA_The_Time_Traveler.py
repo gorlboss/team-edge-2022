@@ -49,10 +49,12 @@ workshop.descr = "The space looked small on the outside. But the inside is of un
 workshop.people = [blacksmith]
 
 ##################################TODO LIST###################################
-  #Fix my if statments so that it'll re-promtp 
-  #when given an invalid answer (check phone notes)
-
-  #Add a sleep function in between function calls/print statment chunks so that it's less jarring
+  #TODO fix the statment/loop so that it goes:
+  #enemy attack
+  #player dodge, ask question, attack
+  #enemy answer, dodge, attack
+  ##OR##
+  #make another ask questions like dioulage thingy for the fight
 ##############################################################################
 
 ###### Functions ######
@@ -122,10 +124,10 @@ def timeTravel():
   while True:
     path = input("Do you wanna go left or right?: ")
     if path == "right":
-      break
       global gameIsOn
       gameIsOn = False
       print("You go through the portal on your right. You end up in a dark room. The portal closes behind you. You are now trapped.\nGAME OVER")
+      break
     elif path == "left":
       print("\nYou go through the portal on the left.")
       break
@@ -162,13 +164,12 @@ def tileRoom():
         print(f"You step on the tile. {boobyList[random.randint(0, len(boobyList))]}.\nGAME OVER")
         cont = input("Do you want to continue? (y/n) : ")
         if cont == "n":
-          break
           gameIsOn = False
+          break
         elif cont == "y":
           print("Starting challenge again...")
+        return gameIsOn
 
-  if gameIsOn != False:
-    print("You step off the final tile. Directly in front of you is a wall of vines. They seem to be moving. A sign appears at your feet:\n\"Well looks like you made it after all chosen one.\nGood for you!\nBut now that your here you're probably wondering where the shard is?\nWell look closer at those vines in front of you.\"\nYou look up and notice a flash of light behind the vines. You sigh. Of course this isn't gonna be easy. You continue reading\n\"Yup, it's behind those vines. And they're not just any type of vines they are Yium vines. They don't take lightly to being cut.\nHave fun~\"n")
 
 def challenge():
   global gameIsOn
@@ -182,6 +183,8 @@ def challenge():
     print("\nIt's in a different language but the glasses translate it for you.\nThe sign reads: \"Welcome chosen one!\nAs you can see the floor before you is covered in tiles. Each some of those tiles activate booby traps, others don't. You have to pick the right path through the tiles or else...well you know.\n Good luck~!\"\n")
     tileRoom()
 
+  if gameIsOn != False:
+    print("You step off the final tile. Directly in front of you is a wall of vines. They seem to be moving. A sign appears at your feet:\n\"Well looks like you made it after all chosen one.\nGood for you!\nBut now that your here you're probably wondering where the shard is?\nWell look closer at those vines in front of you.\"\nYou look up and notice a flash of light behind the vines. You sigh. Of course this isn't gonna be easy. You continue reading\n\"Yup, it's behind those vines. And they're not just any type of vines they are Yium vines. They don't take lightly to being cut.\nHave fun~\"n")
   print("You look at the vines. A message pops up on the glasses:\n\"Plant Name: Ilex erythrosora \nPlant Description: Ilex erythrosora, also known as Yium vines, are found on the planet Stheno. They are carnivorous plants. They use their long thorns to trap their food and hold them until they either bleed out or die. Their epidermis is think and highly cut resistant.\nIt seems that these plants have been enhanced using magic. Their agrassiveness and cut resistance has increased.\"\n You remeber the dagger that Kiyana gave you.")
   useDagger = input("Do you want to use the dagger? (y/n): ")
 
@@ -259,8 +262,8 @@ def riddles():
           print(f"\"Incorrect. The correct answer was \"{answers[n]}\"")
           cont = input("Do you want to continue? (y/n) : ")
           if cont == "n":
-            break
             gameIsOn == False
+            break
           elif cont == "y":
             print("Starting challenge again...")
       
@@ -276,28 +279,37 @@ def challenge2():
     riddles()
 
 def fightDialogue():
-  print(f"{womanInRed.name} takes her cloak of and drops it on the floor. A sadistic grin pasted on her face. \"This is gonna be soooo much fun.\"")
-  enemyAttacks = []
-  enemyDodges = []
-  playerAttacks = []
-  playerDaggerAttacks = []
-  playerDodges = []
+  #TODO fix the statment/loop so that it goes:
+  #enemy attack
+  #player dodge, ask question, attack
+  #enemy answer, dodge, attack
+  print(f"{womanInRed.name} takes her cloak of and drops it on the floor. Two long and sharp looking axes materialize in her hands. A sadistic grin pasted on her face. \"This is gonna be soooo much fun.\"")
+  enemyAttacks = ["lunges forward, swinging her axes at your head.", "kicks at your leg.", "slashes at your arm with one axe and your face with the other.", "strikes you in the head with the handle of her axe", "swings at the side of your head with the axe", "punches you in the gut"]
+  playerDodges = ["roll out of the way.", "jump backward avoiding her kick.", "try to avaoid both but end up getting caught in the arm", "block the hit with your arm", "dip down norrowly avoiding the swing", "you block the punch, gripping her fist tightly."]
 
-  playerQuestions = []
-  enemyResponses = []
+  playerDaggerAttacks = ["thrust the dagger upwards towards her chest.", "adjust your grip and slash at her face", "stike her in the head with the pommel of the dagger", "slash at her arm", "stab her in the shoulder", "stab her in the stomach"]
+  enemyDaggerDodge = ["quickly parries your attack with her own axe.", "pulls backward the knife just barely nicking her", "takes the blow to the face", "swings her arm out of the way", "cries out in pain ripping away from your blade", "takes the blade full on"]
 
-  if "Magic Dagger" in player.inventory:
-    playerAttacks.extend([])
+  playerAttacks = ["kick at her leg", "swing towards her face" "lunge forwards, snatching an axe from her hand", "punch her as hard as you can", "kick her in the stomach", "punch her in the nose"]
+  enemyDodge = ["moves her leg out of the way", "ducks under your punch", "vainly reaches for the axe before you toss it over the edge", "takes the punch to the jaw", "blocks the kick", "cries out in pain as her nose breaks"]
+  
 
+  playerQuestions = ["Why would you do this?", "What do you mean I destroyed your lives?", "Then how come I don't remember anything?", "If you want to fix the machine why are you fighting me?", "What made you change your mind?", "Heal?"]
+  enemyResponses = ["You made me do it. You destoryed all of our lives with your stupid experiment", "YOU were the scientist who got us all sucked in here, it was all YOU", "I erased your memory do I could trick you into fixing the machine", "Becuase after all these years I changed my mind, I want to destroy the machine and you", "After waiting the equivilent of CENTURIES for you to heal and wake up, I realized I quite like it here, my old life wasn't great anyways so I might as well stay", "Oh yes, did I forget to mention that you DIED just after sucking us all in here? Cuz' you did and since you were the one that made the machine you were the only one who knew how to fix it. So I had to essentially bring you back to life."]
+  
   question = 0
+  attack = 0
   for x in range(0, len(playerQuestions)):
-    print(f"{womanInRed.name} {enemyAttacks[random.randint(0, len(enemyAttacks))]}")
-    print(f"You {playerDodges[random.randint(0, len(enemyAttacks))]}")
+    print(f"{womanInRed.name} {enemyAttacks[attack]}\n")
+    print(f"You {playerDodges[attack]}\n")
     if "Magic Dagger" in player.inventory:
-      print(print(f"{playerQuestions[question]}, you ask as you {playerDaggerAttacks[random.randint(0,len(playerDaggerAttacks))]}"))
+      print(print(f"{playerQuestions[question]}, you ask as you {playerDaggerAttacks[attack]}"))
+      sleep(3)
+      print(f"{enemyResponses[question]} she replies as she {enemyDaggerDodge[attack]}")
     else:
-      print(f"{playerQuestions[question]}, you ask as you {playerAttacks[random.randint(0,len(playerAttacks))]}")
-    print(f"{enemyResponses[question]} she replies as she {enemyDodges[random.randint(0, len(enemyDodges))]}")
+      print(f"{playerQuestions[question]}, you ask as you {playerAttacks[attack]}")
+      sleep(3)
+      print(f"She {enemyDodge[attack]} then replies {enemyResponses[question]}")
     sleep(restTime)
     question += 1
     if question > len(playerQuestions):
@@ -317,8 +329,6 @@ def act_1():
     print("She turns to face you.\n\"You are the chosen one\" she says, \"You will fix the machine and take everyone back to the time that they belong in. Those glasses you have?\" she nods towards your pocket, \" Those are the key, they will only work for you so DON'T loose them. All you have to do is find all four shards. Once you do that I'll come to you. All clear? Any questions?\n")
     sleep(4)
     answerQuestions()
-  
-    player.inventory.append("shard")
   elif select.name == bartender.name:
     print(f"\nYou approach the {select.name}. {select.response}")
     print("\nYou appraoch the woman.\nShe motions for you to sit next to her.\n")
@@ -391,7 +401,7 @@ def act_3():
           break
         else:
           print("\nAnswer invalid\n")
-      print("The End...")
+      print("...The End...")
 
   
 ###### Gameplay Code ######
@@ -404,5 +414,3 @@ while gameIsOn:
   if gameIsOn == False:
     break
   act_3()
-
-
