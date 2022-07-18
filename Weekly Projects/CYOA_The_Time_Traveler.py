@@ -16,7 +16,6 @@ class Room:
     print(f"You enter the {self.name}. {self.descr}\n")
     for num in range(len(self.people)):
       print(f"{num}: {self.people[num].descr}")
-    self.people.append(person)
     selection = input("\nWho do you wish to talk to? (pick a number): ")
     return self.people[int(selection)]
     
@@ -48,17 +47,9 @@ workshop.name = "workshop"
 workshop.descr = "The space looked small on the outside. But the inside is of unparalleled size. Books are stacked to the floor. As you move through the shop you see even more rooms, with different tools and creations."
 workshop.people = [blacksmith]
 
-##################################TODO LIST###################################
-  #TODO fix the statment/loop so that it goes:
-  #enemy attack
-  #player dodge, ask question, attack
-  #enemy answer, dodge, attack
-##############################################################################
-
 ###### Functions ######
 import random
 from time import sleep
-from tkinter import Y
 
 restTime = 3
 
@@ -68,8 +59,8 @@ def printQuestions(questions):
 
 def answerQuestions():
   # Goal: Print the dialogue. Allow a user to select from a bank for questions.
-  questions = ["How do you know that I'm the chosen one?", "What’s the machine?", "Can you time travel too?", "Are there more of you?", "Are there more people who are looking for me?", "How did I get here? I was sleep in my bed last I remember", "Why did we have to leave the tavern", "What happened to my old clothes?"]
-  answers = ["The glasses told me", "It’s what the first traveler used; it's the only way we can get back to our timelines.", "Sure I can, that's how I found you. We copied the tech in the original machine and miniaturized it. She holds up her wrist to show her watch. It’s just that we can’t get back to where we were because... She pauses. Anyways we have to fix the Machine", "Yeah, lots of us got sucked in by the experiment. We’ve been stuck for ages. Some of us have been trying to look for you, others have been just wreaking havoc. Some just try to settle down someplace quiet.", "Yeah...they're...y'know around...they just missed you I guess. How unlucky for them...", "Oh...uh...I don't really know. I knew you would be here though...the glasses told me that much. You...must have traveled here yourself...on accident or something.", "Someone tipped them off. Your face has been on wanted posters all morning. If they had seen you, instead of a peacful walk out, we would have had to run for our lives. Aldosans are known for being violent.", "The glassses made some new ones for you so that you cna fit in with the times."]    
+  questions = ["How do you know that I'm the chosen one?", "What’s the machine?", "Can you time travel too?", "Are there more of you?", "Are there more people who are looking for me?"]
+  answers = ["The glasses told me", "It’s what the first traveler used; it's the only way we can get back to our timelines.", "Sure I can, that's how I found you. We copied the tech in the original machine and miniaturized it. She holds up her wrist to show her watch. It’s just that we can’t get back to where we were because... She pauses. Anyways we have to fix the Machine", "Yeah, lots of us got sucked in by the experiment. We’ve been stuck for ages. Some of us have been trying to look for you, others have been just wreaking havoc. Some just try to settle down someplace quiet.", "Yeah...they're...y'know around...they just missed you I guess. How unlucky for them..."]    
 
   # While there are items in the questions list:
   while len(questions) > 0:
@@ -118,16 +109,18 @@ def answerQuestions2():
       
     
   
+#Simple function that gives the user a choice and if the choice is wrong stops the game.
+#gives user a choice to start again if wrong decision made using while loop
 def timeTravel():
   print("A rift opens in front of you. You step through. Before you now lay two paths. One to the left and one two the right.\n")
   while True:
     path = input("Do you wanna go left or right?: ")
     if path == "right":
       global gameIsOn
-      print("You go through the portal on your right. You end up in a dark room. The portal closes behind you. You are now trapped.\nGAME OVER")
+      print("\nYou go through the portal on your right. You end up in a dark room. The portal closes behind you. You are now trapped.\n\nGAME OVER\n")
       cont = input("Do you wanna continue? (y/n): ")
       if cont == "y":
-        print("Starting again....")
+        print("\nStarting again....\n")
       elif cont == "n":
         gameIsOn = False
         break
@@ -138,21 +131,19 @@ def timeTravel():
       break
     else:
       print("\nAnswer invalid, please re-enter.\n")
-  #TODO Fix if statement so that if you enter an invalid entry it re-prompts
 
 def printList(puzzles):
   for x in range(len(puzzles)):
     print(f"{x}: {puzzles[x]}")
 def tileRoom():
-  while True:
-    global gameIsOn
-    #If the first letter is capitalized that the hint. If not then it's a throw off
-    signHint = ["Up the window Rolled the Dog.\nLaughing at the Diasy who dareD to RiDe aLong.\nRainbows fLurried through the air.\nlaughteR\nlaughteR\nEveRywheRe", "Up the meadows\nUnder the moon\nUntiL the Lanes Dried up the Lagoons\nFReedom rains\nUnUnified", "down the Road\nThe Unicorn flies\nRaceing the towaRDs the Red sky.\n Ugly LLamas stop to stare\nUgly chiLDRen eveRywheRe", "rings wiLL rUn UnDer the Rushing Dam\nwraiths will RoLL from the UnDeRbeLLy\nUnusuaL Urges wiLL Rise fRom the monsteR within"]
-    boobyList = ["A metal spike shoots up from the tile implaing you", "Spike drop from overhead, implaing and cruching you simulateously", "A large boulder drops down crushing you", "The tile dissapears and you fall into a vat of acid", "Axes swing out from the walls, slicing you in half", "Arrows shoot out from the walls, impaing you in many places", "Fire shoot out from the wall burning you to a crisp"]
-    correctSequence = ["u","r","d","l","d", "r","r", "u", "u", "u", "l", "d", "l", "u", "r", "u", "r", "r", "u", "l", "u", "u", "r", "d", "r", "u", "u", "u" ]
+  global gameIsOn
+  #HINT: If the first letter is capitalized that the hint. If not then it's a throw off
+  signHint = ["Up the window Rolled the Dog.\nLaughing at the Diasy who dareD to RiDe aLong.\nRainbows fLurried through the air.\nlaughteR\nlaughteR\nEveRywheRe", "Up the meadows\nUnder the moon\nUntiL the Lanes Dried up the Lagoons\nFReedom rains\nUnUnified", "down the Road\nThe Unicorn flies\nRaceing the towaRDs the Red sky.\n Ugly LLamas stop to stare\nUgly chiLDRen eveRywheRe", "rings wiLL rUn UnDer the Rushing Dam\nwraiths will RoLL from the UnDeRbeLLy\nUnusuaL Urges wiLL Rise fRom the monsteR within"]
+  boobyList = ["A metal spike shoots up from the tile implaing you", "Spike drop from overhead, implaing and cruching you simulateously", "A large boulder drops down crushing you", "The tile dissapears and you fall into a vat of acid", "Axes swing out from the walls, slicing you in half", "Arrows shoot out from the walls, impaing you in many places", "Fire shoot out from the wall burning you to a crisp"]
+  correctSequence = ["u","r","d","l","d", "r","r", "u", "u", "u", "l", "d", "l", "u", "r", "u", "r", "r", "u", "l", "u", "u", "r", "d", "r", "u", "u", "u" ]
 
-    print(f"You turn back towards the grid. You notice another smaller sign sitting near the edge of the grid.\nIt reads:\n\"{signHint[0]}\"\n")
-  
+  print(f"You turn back towards the grid. You notice another smaller sign sitting near the edge of the grid.\nIt reads:\n\"{signHint[0]}\"\n")
+  while room == True:
     for x in range(len(correctSequence)):
       print("**u for up, d for down, r for right, and l for left**")
       step = input("Which way to you want to move?: ")
@@ -165,12 +156,12 @@ def tileRoom():
         elif x == 20:
           print(f"A sign sits at the edge of the tile. It reads:\n\"{signHint[3]}\"\n")
       else:
-        #TODO make it so that the game doesn't end each time instead it just re runs the function
+        #This gives the user a choice to continue shoiuld they make a wrong move
         print(f"You step on the tile. {boobyList[random.randint(0, len(boobyList))]}.\nGAME OVER")
         cont = input("Do you want to continue? (y/n) : ")
         if cont == "n":
           gameIsOn = False
-          break
+          room = False
         elif cont == "y":
           print("Starting challenge again...")
         return gameIsOn
@@ -211,7 +202,6 @@ def enterWorkshop():
   selection = workshop.enter(player)
   if selection.name == blacksmith.name:
     print(" ")
-    print(blacksmith.descr)
     sleep(3)
     print("\nYou walk up to the woman.\n\n\"Who are you and why are you here?\" she asks.\n\n")
     print("You tell her what the woman from the tavern said to you. You don't mention her help.\n\nShe turns and inspects you. Then she nods. \"Follow me\"")
@@ -255,23 +245,31 @@ def enterClearing():
 
 def riddles():
   global gameIsOn
-  while True:
-    riddles = ["What comes once in a minute, twice in a moment, but never in a thousand years?", "Three doctors claim the Paul is their brother yet Paul claims he has no brothers. Who is lying?", "This belongs to you but everyone else uses it. What is it?", "In 1990 a person is 15 years old. In 1995 that same person is 10 years old. How can this be?", "The person who makes it has no need for it. The person who buys it doesn't use it. The person who uses it doesn't know it. What is it?", "You're in a dark room with a candle, stove, adn a gas lamp. You only have one match. What do you light first?", "Your parents have six sons. Each son has a sister. How many people are in the family?"]
-    answers = ["m", "No one", "your name", "they were born in BCE", "a coffin", "the match", "nine"]
+
+  riddles = ["What comes once in a minute, twice in a moment, but never in a thousand years?", "Three doctors claim the Paul is their brother yet Paul claims he has no brothers. Who is lying?", "This belongs to you but everyone else uses it. What is it?", "In 1990 a person is 15 years old. In 1995 that same person is 10 years old. How can this be?", "The person who makes it has no need for it. The person who buys it doesn't use it. The person who uses it doesn't know it. What is it?", "You're in a dark room with a candle, stove, and a gas lamp. You only have one match. What do you light first?", "Your parents have six sons. Each son has a sister. How many people are in the family?"]
+  answers = ["m", "no one", "your name", "they were born in BCE", "a coffin", "the match", "nine"]
+  while room == True:
     for n in range(0, len(riddles)):
-        print(f"\n\"{riddles[n]}\"\n")
-        response = input("What is your answer?: ")
-        if response == answers[n]:
-          print("You are correct")  
+      print(f"\n\"{riddles[n]}\"\n")
+      response = input("What is your answer?: ")
+      if response == answers[n]:
+        print("You are correct")  
+      else:
+        print(f"\"Incorrect. The correct answer was \"{answers[n]}\"")
+        cont = input("\nDo you want to continue? (y/n) : ")
+        if cont == "n":
+          gameIsOn == False
+          room = False
+          break
+        elif cont == "y":
+          print("\nStarting challenge again...\n")
         else:
-          print(f"\"Incorrect. The correct answer was \"{answers[n]}\"")
-          cont = input("Do you want to continue? (y/n) : ")
-          if cont == "n":
-            gameIsOn == False
-            break
-          elif cont == "y":
-            print("Starting challenge again...")
-      
+          print("\nNot an answer.\n")
+        if n > len(riddles):
+          room = False
+          break
+
+
 def challenge2():
   print("You are now in a room. You rub your various aches when suddenly you realize you aren't alone in the room.\n\nIn front of you is a woman. or atleast a statue of a woman. She is wrapped in a red cloak, she seems to be staring at you. Something about her seems familiar.\n\nYou step closer towards her. Something about her is definitly familiar.") 
   sleep(3)
@@ -284,10 +282,6 @@ def challenge2():
     riddles()
 
 def fightDialogue():
-  #TODO fix the statment/loop so that it goes:
-  #enemy attack
-  #player dodge, ask question, attack
-  #enemy answer, dodge, attack
   print(f"{womanInRed.name} takes her cloak of and drops it on the floor. Two long and sharp looking axes materialize in her hands. A sadistic grin pasted on her face. \"This is gonna be soooo much fun.\"")
   enemyAttacks = ["lunges forward, swinging her axes at your head.", "kicks at your leg.", "slashes at your arm with one axe and your face with the other.", "strikes you in the head with the handle of her axe", "swings at the side of your head with the axe", "punches you in the gut"]
   playerDodges = ["roll out of the way.", "jump backward avoiding her kick.", "try to avaoid both but end up getting caught in the arm", "block the hit with your arm", "dip down norrowly avoiding the swing", "you block the punch, gripping her fist tightly."]
@@ -423,3 +417,6 @@ while gameIsOn:
   if gameIsOn == False:
     break
   act_3()
+
+
+  #my game is mostly-text based so I added in some sleep functions to break up huge chunks of code
