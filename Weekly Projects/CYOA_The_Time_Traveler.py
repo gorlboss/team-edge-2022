@@ -53,13 +53,12 @@ workshop.people = [blacksmith]
   #enemy attack
   #player dodge, ask question, attack
   #enemy answer, dodge, attack
-  ##OR##
-  #make another ask questions like dioulage thingy for the fight
 ##############################################################################
 
 ###### Functions ######
 import random
 from time import sleep
+from tkinter import Y
 
 restTime = 3
 
@@ -125,9 +124,15 @@ def timeTravel():
     path = input("Do you wanna go left or right?: ")
     if path == "right":
       global gameIsOn
-      gameIsOn = False
       print("You go through the portal on your right. You end up in a dark room. The portal closes behind you. You are now trapped.\nGAME OVER")
-      break
+      cont = input("Do you wanna continue? (y/n): ")
+      if cont == "y":
+        print("Starting again....")
+      elif cont == "n":
+        gameIsOn = False
+        break
+      else:
+        print("Not a valid answer.")
     elif path == "left":
       print("\nYou go through the portal on the left.")
       break
@@ -287,11 +292,11 @@ def fightDialogue():
   enemyAttacks = ["lunges forward, swinging her axes at your head.", "kicks at your leg.", "slashes at your arm with one axe and your face with the other.", "strikes you in the head with the handle of her axe", "swings at the side of your head with the axe", "punches you in the gut"]
   playerDodges = ["roll out of the way.", "jump backward avoiding her kick.", "try to avaoid both but end up getting caught in the arm", "block the hit with your arm", "dip down norrowly avoiding the swing", "you block the punch, gripping her fist tightly."]
 
-  playerDaggerAttacks = ["thrust the dagger upwards towards her chest.", "adjust your grip and slash at her face", "stike her in the head with the pommel of the dagger", "slash at her arm", "stab her in the shoulder", "stab her in the stomach"]
-  enemyDaggerDodge = ["quickly parries your attack with her own axe.", "pulls backward the knife just barely nicking her", "takes the blow to the face", "swings her arm out of the way", "cries out in pain ripping away from your blade", "takes the blade full on"]
+  playerDaggerAttacks = ["adjust your grip and slash at her face", "stike her in the head with the pommel of the dagger", "stab her in the shoulder", "lunge forwards, snatching an axe from her hand"]
+  enemyDaggerDodge = ["pulls backward the knife just barely nicking her", "takes the blow to the face", "cries out in pain ripping away from your blade", "vainly reaches for the axe before you toss it over the edge"]
 
-  playerAttacks = ["kick at her leg", "swing towards her face" "lunge forwards, snatching an axe from her hand", "punch her as hard as you can", "kick her in the stomach", "punch her in the nose"]
-  enemyDodge = ["moves her leg out of the way", "ducks under your punch", "vainly reaches for the axe before you toss it over the edge", "takes the punch to the jaw", "blocks the kick", "cries out in pain as her nose breaks"]
+  playerAttacks = ["kick her in the stomach", "punch her in the nose"]
+  enemyDodge = ["doubles over in pain with the impact", "cries out in pain as her nose breaks"]
   
 
   playerQuestions = ["Why would you do this?", "What do you mean I destroyed your lives?", "Then how come I don't remember anything?", "If you want to fix the machine why are you fighting me?", "What made you change your mind?", "Heal?"]
@@ -299,19 +304,23 @@ def fightDialogue():
   
   question = 0
   attack = 0
+
   for x in range(0, len(playerQuestions)):
-    print(f"{womanInRed.name} {enemyAttacks[attack]}\n")
+    print(f"She {enemyAttacks[attack]}\n")
+    sleep(3)
     print(f"You {playerDodges[attack]}\n")
     if "Magic Dagger" in player.inventory:
-      print(print(f"{playerQuestions[question]}, you ask as you {playerDaggerAttacks[attack]}"))
+      playerAttacks.extend(playerDaggerAttacks)
+      enemyDodge.extend(enemyDaggerDodge)
+      print(print(f"{playerQuestions[question]}, you ask as you {playerAttacks[attack]}\n"))
       sleep(3)
-      print(f"{enemyResponses[question]} she replies as she {enemyDaggerDodge[attack]}")
+      print(f"{enemyResponses[question]} she replies as she {enemyDodge[attack]}\n")
     else:
-      print(f"{playerQuestions[question]}, you ask as you {playerAttacks[attack]}")
+      print(f"{playerQuestions[question]}, you ask as you {playerAttacks[attack]}\n")
       sleep(3)
-      print(f"She {enemyDodge[attack]} then replies {enemyResponses[question]}")
-    sleep(restTime)
+      print(f"She {enemyDodge[attack]} then replies {enemyResponses[question]}.\n")
     question += 1
+    atack += 1
     if question > len(playerQuestions):
       break
 
@@ -341,7 +350,6 @@ def act_1():
   sleep(9)
   print("Suddenly, a flash of light comes from your pocket. You pull the glasses out, they are now glowing.\nYou quickly look around rhe tavern but now one seems to notice the glow")
   timeTravel()
-  sleep(restTime)
 
 def act_2():
   global gameIsOn
@@ -389,6 +397,7 @@ def act_3():
       sleep(restTime)
       fightDialogue()
     if gameIsOn != False:
+      sleep(restTime)
       print(f"You step past the defeated {womanInRed.name} to the machine.\nYou instert the shards into the machine.\nThe machine starts to hum and glow.\nYou turn back to {womanInRed.name}. She stands with great diffculty and faces you, \"I knew you a long time before all this happened. I know your fixing this to fix your mistakes but you belong here. This was your dream. In the end the decision is up to you.\" and with that she is gone in a flash. You look aout at the portal.")
 
       ending = input("Do you wanna stay or go through the portal?(y/n): ")
